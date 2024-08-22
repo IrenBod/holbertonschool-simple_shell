@@ -114,4 +114,4 @@ Compile the source code:
 
 ## Authors
 
-@IrinaMora https://github.com/IrenBod Ы
+@IrinaMora https://github.com/IrenBod
