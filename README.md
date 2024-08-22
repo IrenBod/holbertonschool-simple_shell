@@ -27,29 +27,42 @@ This shell is designed for educational purposes, providing a fundamental foundat
 Here are some examples of commands you can run in the Simple Shell:
 
 **Running a simple command**:
-*      $ ls (Output: Lists the files and directories
-                    in the current working directory)
+*		$ ls (Output: Lists the files and directories
+		in the current working directory)
 
 **Changing the directory:**
-*      $ cd /path/to/directory
-       Output: Changes the current directory to the specified path.
+*		$ cd /path/to/directory
+		Output: Changes the current directory to the specified path.
 
 **Printing the current directory:**
-*      $ pwd
-       Output: Displays the current working directory
+*		$ pwd
+		Output: Displays the current working directory
 
 **Running a command with arguments:**
-*     $ ls -l /home
-      Output: Lists the files and directories in /home in long format.
+*		$ ls -l /home
+		Output: Lists the files and directories in /home in long format.
+
 **Printing environment variables:**
-*     $ env
-      Output: Displays the current environment variables.
+*		$ env
+		Output: Displays the current environment variables.
+
 **Exiting the shell:**
-*      $ exit
-       Output: Exits the Simple Shell.
+*		$ exit
+		Output: Exits the Simple Shell.
+
 **Handling invalid commands:**
-*      $ invalidcommand
-        Output: `./hsh: 1: invalidcommand: not found
+*		$ invalidcommand
+		Output: `./hsh: 1: invalidcommand: not found
+
+**Running commands from a file:**
+		$ echo -e "ls -l\npwd\ncd /\nls" > commands.txt
+		./hsh < commands.txt
+		Output: Executes the commands from the file `commands.txt` sequentially.
+
+**Running commands through a pipe:**
+		$ echo "ls -l" | ./hsh
+		 Output: Executes the `ls -l` command.
+
 ## Files
 
 * main.c: Contains the main function, which starts the shell loop.
@@ -66,6 +79,8 @@ Here are some examples of commands you can run in the Simple Shell:
 * The shell does not handle command pipelines (|), redirections (>, <), or background execution (&).
 * Commands must be entered one at a time.
 * The shell does not support non-interactive mode (e.g., piping commands from a file or another program).
+* The shell does not handle command pipelines (|), redirections (>, <), or background execution (&) in interactive mode
+* Commands must be entered one at a time in interactive mode.
  ## Documentation
 
  [Documentation Betty style ](https://github.com/alx-tools/Betty/wiki)

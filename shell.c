@@ -2,10 +2,13 @@
 
 /**
  * shell_loop - The main loop of the shell.
- * This function continuously prompts the user for input, reads the input,
- * splits it into commands and arguments, executes the command, and repeats
- * until the user exits the shell.
+ * This function continuously prompts the user for input in interactive mode
+ * or processes commands from a file/pipe in non-interactive mode.
+ * It reads input, splits it into commands
+ * and arguments, executes the command,
+ * and repeats until the user exits the shell.
  */
+
 void shell_loop(void)
 {
 	char *line;
@@ -13,33 +16,39 @@ void shell_loop(void)
 	int status;
 
 	do {
-		printf("$ "); /* Display the prompt */
-		line = read_line(); /* Read the user input */
-		args = split_line(line); /* Split the input into command and arguments */
-		status = execute_command(args); /* Execute the command */
+		if (isatty(STDIN_FILENO)) /* Check if  interact*/
+		{
+			printf("$ "); /* the invitation in interactive mode only*/
+		}
+		line = read_line(); /* read input */
+		args = split_line(line); /* Split the input string into arguments */
+		status = execute_command(args);
 
 		free(line);
 		free(args);
-	} while (status); /* Repeat until status is 0 (exit command) */
+	} while (status); /*Repeat until the status is 0 (command 'exit') */
 }
 
+
 /**
- * read_line - Reads a line of input from the user.
+ * read_line - Reads a line of input from the user or from a file/pipe.
+
+ * This function uses getline to read input either from the user in
+ * interactive mode or from a file/pipe in non-interactive mode.
+ * It handles the end-of-file condition (Ctrl+D) by exiting the shell.
+ * If another error occurs while reading the input, an error message
+ * is displayed and the program exits.
  *
- * This function uses getline to read input from the user. It handles
- * the end-of-file condition (Ctrl+D) by exiting the shell. If another
- * error occurs while reading the input, an error message is displayed
- * and the program exits.
- *
- * Return: The line entered by the user.
+ * Return: The line entered by the user or read from a file/pipe.
  */
+
 
 char *read_line(void)
 {
 	char *line = NULL;
 	size_t bufsize = 0;
 
-	if (getline(&line, &bufsize, stdin) == -1)  /* Read line */
+	if (getline(&line, &bufsize, stdin) == -1)  /* read line */
 	{
 		if (feof(stdin))  /* End of file processing (Ctrl+D) */
 		{
@@ -54,6 +63,7 @@ char *read_line(void)
 
 	return (line);
 }
+
 
 /**
  * split_line - Splits a line into tokens (words).
